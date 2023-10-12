@@ -1,28 +1,34 @@
 package com.cbrain.controller;
 
-import com.cbrain.controller.dto.StudentDTO;
+import com.cbrain.controller.dto.StudentDto;
+import com.cbrain.controller.dto.SubjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/student")
 public class StudentController {
     @GetMapping("/{studentId}")
-    Mono<StudentDTO> getStudent(@PathVariable("studentId") Integer studentId) {
-        return Mono.just(new StudentDTO(studentId,"DSP","Chathuranga",33));
+    Mono<StudentDto> getStudent(@PathVariable("studentId") Integer studentId) {
+        List<SubjectDto> subjectDtos = new ArrayList<>();
+        subjectDtos.add(new SubjectDto(1,"Mathematics"));
+        return Mono.just(new StudentDto(studentId,"DSP",
+                "Chathuranga",33, subjectDtos));
     }
 
     @PostMapping
-    Mono<StudentDTO> createStudent(@RequestBody StudentDTO studentDTO) {
-        return Mono.just(studentDTO);
+    Mono<StudentDto> createStudent(@RequestBody StudentDto studentDto) {
+        return Mono.just(studentDto);
     }
 
     @PutMapping("/{studentId}")
-    Mono<StudentDTO> updateStudent(@PathVariable("studentId") Integer studentId, @RequestBody StudentDTO studentDTO) {
-        return Mono.just(studentDTO);
+    Mono<StudentDto> updateStudent(@PathVariable("studentId") Integer studentId, @RequestBody StudentDto studentDto) {
+        return Mono.just(studentDto);
     }
 
     @DeleteMapping("/{studentId}")
