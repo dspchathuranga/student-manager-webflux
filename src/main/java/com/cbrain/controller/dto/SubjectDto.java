@@ -1,4 +1,4 @@
 package com.cbrain.controller.dto;
 
-public record SubjectDto(Integer subject_id, String subject_name) {
+public record SubjectDto(Integer subjectId, String subjectName, String activeStatus) {
 }

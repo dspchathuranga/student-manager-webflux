@@ -1,31 +1,41 @@
 package com.cbrain.controller;
 
 import com.cbrain.controller.dto.SubjectDto;
+import com.cbrain.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/subject")
 public class SubjectController {
+
+    private final SubjectService subjectService;
+
     @GetMapping("/{subjectId}")
     Mono<SubjectDto> getSubject(@PathVariable("subjectId") Integer subjectId) {
-        return Mono.just(new SubjectDto(subjectId,"Mathematics"));
+        return subjectService.getSubject(subjectId);
     }
 
     @PostMapping
     Mono<SubjectDto> createSubject(@RequestBody SubjectDto subjectDto) {
-        return Mono.just(subjectDto);
+        return subjectService.createSubject(subjectDto);
     }
 
     @PutMapping("/{subjectId}")
     Mono<SubjectDto> updateSubject(@PathVariable("subjectId") Integer subjectId, @RequestBody SubjectDto subjectDto) {
-        return Mono.just(subjectDto);
+        return subjectService.updateSubject(subjectId, subjectDto);
     }
 
     @DeleteMapping("/{subjectId}")
     Mono<Void> deleteSubject(@PathVariable("subjectId") Integer subjectId) {
-        return Mono.empty();
+        return subjectService.deleteSubject(subjectId);
+    }
+
+    @GetMapping("/all")
+    Flux<SubjectDto> getAllSubjects() {
+        return subjectService.getAllSubjects();
     }
 }
